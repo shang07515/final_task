@@ -15,5 +15,12 @@ def generate_launch_description():
             name='main_control_node',
             output='screen',
             parameters=[config_file_path]  # 传入YAML文件路径
+        ),
+        Node(
+            package='final_task_topic',
+            executable='chassis_node',
+            name='chassis_node',
+            output='screen',
+            parameters=[config_file_path]  # 传入YAML文件路径
         )
-    ])
+    ])  

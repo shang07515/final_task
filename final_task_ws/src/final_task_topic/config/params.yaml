@@ -4,3 +4,6 @@ main_control_node:
     start_point: 1
     # 终点
     end_point: 1
+
+chassis_node:
+  ros__parameters:
