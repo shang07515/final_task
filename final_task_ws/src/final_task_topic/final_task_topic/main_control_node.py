@@ -35,6 +35,8 @@ class MainControlNode(Node):
         start_index = self.path_sequence.index(start_point)
         end_index = self.path_sequence.index(end_point)
 
+        self.get_logger().info("===========开始模拟============")# 宣布开始模拟
+
         if start_index == end_index:
             # 环路巡检
             self.path_to_follow = self.path_sequence[start_index:] + self.path_sequence[:start_index+1]# 从指定点出发，环形路径运动一圈回到起点
@@ -66,7 +68,6 @@ class MainControlNode(Node):
         # 检查是否结束
         if not self.path_to_follow:
             self.stop_robot()
-            self.get_logger().info("已到达终点,机器人停止运动")
             self.get_logger().info(f"最终位置: ({self.current_x:.2f}, {self.current_y:.2f})")
 
             self.destroy_timer(self.timer)# 关键点！消除定时器，防止继续调用回调函数
@@ -87,8 +88,15 @@ class MainControlNode(Node):
         distance = math.sqrt(dx**2 + dy**2)
 
         # 判断距离
-        if distance < 0.1:  # 如果距离小于0.1米，则认为已到达目标点
+        if distance < 0.1 :  # 如果距离小于0.1米，则认为已到达目标点
+
             self.path_to_follow.pop(0)  # 移除已到达的点
+
+            if self.path_to_follow:  # 如果还有下一个目标点，则继续前往下一个目标点
+                self.get_logger().info(f"已到达点 {target_index}, 继续前往下一个目标点")
+       
+            elif not self.path_to_follow:  # 如果距离小于0.1米且没有下一个目标点，则停止机器人
+                self.get_logger().info(f"已到达终点 {target_index}, 机器人停止运动,任务完成！")
             return
 
         # 计算速度指令
@@ -107,7 +115,7 @@ class MainControlNode(Node):
         self.current_y += vy * dt
 
         # 打印当前位置信息
-        self.get_logger().info(f"当前位置信息: ({self.current_x:.2f}, {self.current_y:.2f}), 目标点: ({target_x:.2f}, {target_y:.2f}), 距离: {distance:.2f} m")
+        #self.get_logger().info(f"当前位置信息: ({self.current_x:.2f}, {self.current_y:.2f}), 目标点: ({target_x:.2f}, {target_y:.2f}), 距离: {distance:.2f} m")
 
 def main(args=None):
     rclpy.init(args=args)

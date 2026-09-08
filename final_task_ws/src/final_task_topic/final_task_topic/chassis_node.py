@@ -16,8 +16,8 @@ class ChassisNode(Node):
         # 执行停止操作
         if vx == 0.0 and vy == 0.0:
             self.get_logger().info('接收到停止指令，底盘停止运动。')
-        else:
-            self.get_logger().info(f'接收到速度指令: vx={vx:.2f} m/s, vy={vy:.2f} m/s')
+        #else:
+            #self.get_logger().info(f'接收到速度指令: vx={vx:.2f} m/s, vy={vy:.2f} m/s')
             # 在这里可以添加底盘运动控制的代码，例如调用底盘驱动接口
 
 def main(args=None):
