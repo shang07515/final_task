@@ -1,6 +1,6 @@
 main_control_node:
   ros__parameters:
     # 起点
-    start_point: 7
+    start_point: 5
     # 终点
-    end_point: 7
+    end_point: 6

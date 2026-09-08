@@ -10,8 +10,8 @@ class ChassisNode(Node):
 
     def cmd_vel_callback(self, msg):
         # 接收主控制节点发来的速度指令
-        vx = min(msg.linear.x, 2.0) # 限制线速度在2.0 m/s以内
-        vy = min(msg.linear.y, 2.0) # 限制线速度在2.0 m/s以内
+        vx = max(min(msg.linear.x, 2.0), -2.0) # 限制线速度绝对值在2.0 m/s以内
+        vy = max(min(msg.linear.y, 2.0), -2.0) # 限制线速度绝对值在2.0 m/s以内
 
         # 执行停止操作
         if vx == 0.0 and vy == 0.0:
