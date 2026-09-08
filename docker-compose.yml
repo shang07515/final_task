@@ -1,0 +1,7 @@
+services:
+  final_task:
+    build: .
+    container_name: final_task_container
+    volumes:
+      - ./final_task_ws:/app
+    entrypoint: ["/bin/bash", "/app/entrypoint.sh"]
